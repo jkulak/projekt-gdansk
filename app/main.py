@@ -1,7 +1,6 @@
 import csv
-import os
-import fnmatch
-import sys
+from algo import algo
+
 
 TEST_DATA_DIR = "tests/data/"
 TEST_SETUP_FLIE = "tests/setup.csv"
@@ -54,23 +53,6 @@ def run_tests():
             print("✅")
         else:
             print("🚫")
-
-
-# returns stock price difference between buying price to selling price
-# TICKER,PER,DATE,TIME,OPEN,HIGH,LOW,CLOSE,VOL,OPENINT
-def algo(data, b, u1, u2, d1, d2):
-
-    for row in data:
-
-        # case 1, going up, buy at u1, sell at u2
-        if (row["HIGH"] >= u2 or row["OPEN"] >= u2 or row["CLOSE"] >= u2) and (
-            row["LOW"] > b
-        ):
-            return u2 - u1
-
-        # case 2, locking at u1 and
-
-    return 1
 
 
 def main():

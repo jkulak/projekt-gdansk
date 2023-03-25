@@ -11,13 +11,13 @@ COPY requirements.txt .
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 
 # Copy the 'code' directory into the container
-COPY code code
+COPY app app
 
 # Make port 80 available to the world outside this container
 EXPOSE 80
 
 # Define the environment variable
-ENV NAME World
+ENV PYTHONPATH /app
 
 # Run the command to start your Python application
-CMD ["python", "code/main.py"]
+CMD ["python", "app/main.py"]
