@@ -18,8 +18,14 @@ def algo(data, d2, d1, s, u1, u2):
         l = row["LOW"]
         c = row["CLOSE"]
 
+        # case 1
         # "eveything happens in the same minute"
         if (h >= u1) and (l <= s):
+            return loss
+
+        # case 9
+        # "everything happens in the same minute"
+        if (l < d1) and (h >= s):
             return loss
 
         # Only check for second and later minutes

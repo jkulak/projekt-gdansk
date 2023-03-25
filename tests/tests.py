@@ -33,7 +33,7 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "in first minute, trigger buy and stop loss",
                 "data": [
-                    [29, 41, 28, 40],
+                    [30, 41, 28, 40],  # h >= u1, l <= s
                     [99, 99, 99, 99],
                 ],
                 "expected_result": -10,
@@ -41,7 +41,7 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "b",
                 "data": [
-                    [30, 51, 28, 40],
+                    [30, 51, 28, 40],  # h >= u2, l <= s
                     [99, 99, 99, 99],
                 ],
                 "expected_result": -10,
@@ -339,6 +339,137 @@ class TestAlgo(unittest.TestCase):
             },
         ]
 
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case9(self):
+        "Test case 9: going down, buy at d1, sell at d2"
+
+        tests = [
+            {
+                "case_name": "in first minute, trigger buy and stop loss",
+                "data": [
+                    [30, 30, 19, 21],  # l < d1, h >= s
+                    [99, 99, 99, 99],
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "b",
+                "data": [
+                    [30, 30, 9, 21],  # l < d2, h >= s
+                    [99, 99, 99, 99],
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "c",
+                "data": [
+                    [30, 40, 28, 40],
+                    [99, 99, 99, 99],
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "d",
+                "data": [
+                    [30, 40, 30, 40],
+                    [99, 99, 99, 99],  # is not reached
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "e",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 50, 31, 39],  # buy and sell equal u2
+                    [99, 99, 99, 99],  # is not reached
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "f",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 51, 31, 39],  # buy and sell greater u2
+                    [99, 99, 99, 99],  # is not reached
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "g",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 50, 31, 39],  # buy and sell equal u2
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "h",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 51, 31, 39],  # buy and sell greater u2
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "j",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy
+                    [31, 51, 31, 39],  # trigger sell
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "k",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy
+                    [31, 51, 31, 39],  # trigger sell
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "l",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy
+                    [31, 39, 31, 39],  # sell is not happening
+                    [31, 51, 31, 39],  # trigger sell
+                ],
+                "expected_result": 10,
+            },
+            {
+                "case_name": "m",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy
+                    [29, 39, 29, 39],  # loss
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "o",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy
+                    [31, 51, 31, 39],  # trigger sell
+                    [29, 39, 29, 39],  # loss
+                ],
+                "expected_result": 10,
+            },
+        ]
         test_data_sanity_check(tests)
 
         for test in tests:
