@@ -137,16 +137,6 @@ class TestAlgo(unittest.TestCase):
                 "expected_result": -10,
             },
             {
-                "case_name": "n",
-                "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [31, 39, 31, 39],  # nothing is happening
-                    [29, 39, 29, 39],  # loss
-                ],
-                "expected_result": -10,
-            },
-            {
                 "case_name": "o",
                 "data": [
                     [30, 39, 30, 39],  # nothing is happening
@@ -156,23 +146,205 @@ class TestAlgo(unittest.TestCase):
                 ],
                 "expected_result": 10,
             },
-            # {
-            #     "case_name": "p",
-            #     "data": [
-            #         [30, 39, 30, 39],  # nothing is happening
-            #         [31, 41, 31, 39],  # trigger buy
-            #         [31, 42, 31, 39],  # sell is not happening
-            #         [29, 45, 29, 45],  # partial win
-            #     ],
-            #     "expected_result": 10,
-            # },
         ]
         test_data_sanity_check(tests)
 
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), *set_up_parameters()),
+                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case2(self):
+        "Test case 1: going up, buy at u1, sell between u1 and u2, partial win"
+
+        tests = [
+            {
+                "case_name": "case 2 a",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 31, 45],  # partial win
+                ],
+                "expected_result": 5,
+            },
+            {
+                "case_name": "case 2 b",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy greater u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 31, 45],  # partial win
+                ],
+                "expected_result": 5,
+            },
+            {
+                "case_name": "case 2 c",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 29, 45],  # loss
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 2 d",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy greater u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 29, 45],  # loss
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 2 e",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 30, 45],  # loss
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 2 f",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy greater u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 30, 45],  # loss
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 2 g",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy greater u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 30, 45],  # loss
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 72, 31, 72],  # sell is not happening
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 2 h",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 36, 31, 34],  # sell is not happening
+                    [31, 40, 31, 33],  # sell is not happening
+                    [33, 46, 31, 46],  # partial win
+                ],
+                "expected_result": 6,
+            },
+        ]
+
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case3(self):
+        "Test case 3: going up, buy at u1, sell between s and u1, partial loss"
+
+        tests = [
+            {
+                "case_name": "case 3 a",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 31, 35],  # partial loss
+                ],
+                "expected_result": -5,
+            },
+            {
+                "case_name": "case 3 b",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 41, 31, 39],  # trigger buy greater u1
+                    [31, 42, 31, 39],  # sell is not happening
+                    [31, 45, 31, 35],  # partial loss
+                ],
+                "expected_result": -5,
+            },
+            {
+                "case_name": "case 3 h",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 40, 31, 39],  # trigger buy equal u1
+                    [31, 36, 31, 34],  # sell is not happening
+                    [31, 40, 31, 33],  # sell is not happening
+                    [33, 46, 31, 36],  # partial loss
+                ],
+                "expected_result": -4,
+            },
+        ]
+
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case_not_trade(self):
+        "Test case no trade was triggered, returns zero"
+
+        tests = [
+            {
+                "case_name": "case no trade a",
+                "data": [
+                    [30, 39, 30, 39],  # nothing is happening
+                    [31, 39, 31, 39],  # nothing is happening
+                    [31, 38, 31, 38],  # nothing is happening
+                    [31, 38, 31, 35],  # no trade
+                ],
+                "expected_result": 0,
+            },
+            {
+                "case_name": "case no trade b",
+                "data": [
+                    [30, 31, 29, 29],  # nothing is happening
+                    [23, 23, 21, 23],  # nothing is happening
+                    [24, 24, 22, 23],  # nothing is happening
+                    [25, 29, 24, 27],  # no trade
+                ],
+                "expected_result": 0,
+            },
+            {
+                "case_name": "case no trade b",
+                "data": [
+                    [30, 39, 21, 29],  # nothing is happening
+                    [23, 38, 21, 31],  # nothing is happening
+                    [34, 38, 25, 29],  # nothing is happening
+                    [21, 38, 21, 38],  # no trade
+                ],
+                "expected_result": 0,
+            },
+        ]
+
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
                     test["expected_result"],
                     places=5,
                 )

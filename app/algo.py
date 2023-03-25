@@ -9,6 +9,8 @@ def algo(data, d2, d1, s, u1, u2):
     buy_triggered = False
     minute = 1
 
+    result = 0
+
     for row in data:
 
         o = row["OPEN"]
@@ -23,16 +25,22 @@ def algo(data, d2, d1, s, u1, u2):
         # Only check for second and later minutes
         # if trigger and sell was within the same minute
         # and stop loss was not triggered
-        if minute > 1:
-            if (h >= u2) and (l > s):
-                return win
+        if minute < 1:
+            minute += 1
+            continue
 
-            # # case 1, going up, buy at u1, sell at u2
-            # if h >= u1:
-            #     buy_triggered = True
-            #     continue
+        if (h >= u2) and (l > s):
+            return win
 
-        minute += 1
+        # case 1, going up, buy at u1, sell at u2
+        if h >= u1:
+            buy_triggered = True
+
+        if buy_triggered and l > s:
+            result = c - u1
+
+        if buy_triggered and l <= s:
+            return loss
 
     # by default, return 1/4th of atr
-    return loss
+    return result
