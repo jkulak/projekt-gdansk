@@ -13,10 +13,10 @@ def algo(data, d2, d1, s, u1, u2):
 
     for row in data:
 
-        o = row["OPEN"]
-        h = row["HIGH"]
-        l = row["LOW"]
-        c = row["CLOSE"]
+        o = row["<OPEN>"]
+        h = row["<HIGH>"]
+        l = row["<LOW>"]
+        c = row["<CLOSE>"]
 
         # case 1
         # "eveything happens in the same minute"

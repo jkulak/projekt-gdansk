@@ -4,7 +4,7 @@ from app import algo
 
 
 def convert_to_dict_list(table):
-    headers = ["OPEN", "HIGH", "LOW", "CLOSE"]
+    headers = ["<OPEN>", "<HIGH>", "<LOW>", "<CLOSE>"]
     dict_list = [dict(zip(headers, row)) for row in table]
     return dict_list
 
