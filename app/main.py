@@ -1,6 +1,6 @@
 from collections import defaultdict
-from algo import algo
-from data_handling import read_data_file, get_data_files
+import algorithms
+from data_handling import read_data_file, get_data_files, pd_read_data_file
 from metrics import calculate_average_true_range
 import os
 
@@ -8,10 +8,6 @@ DATA_DIR = "./test_data/5_min/us/nyse_stocks/1/"
 
 
 def group_rows_by_date(data):
-    rows_by_date = defaultdict(list)
-    for row in data:
-        date = row["<DATE>"]
-        rows_by_date[date].append(row)
 
     return rows_by_date
 
@@ -20,7 +16,7 @@ def main():
 
     files = get_data_files(DATA_DIR)
     for file in files:
-        data = read_data_file(DATA_DIR + file)
+        data = pd_read_data_file(DATA_DIR + file)
 
         data_atr = calculate_average_true_range(data)
 

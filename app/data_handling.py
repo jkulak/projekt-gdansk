@@ -1,5 +1,26 @@
 import csv
 import os
+import pandas as pd
+
+
+def pd_read_data_file(file_path):
+    df = pd.read_csv(
+        file_path,
+        header=0,
+        names=[
+            "ticker",
+            "per",
+            "date",
+            "time",
+            "open",
+            "high",
+            "low",
+            "close",
+            "vol",
+            "openint",
+        ],
+    )
+    return df
 
 
 def get_data_files(directory):
