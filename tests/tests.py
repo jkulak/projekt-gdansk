@@ -1,12 +1,42 @@
 import sys
 import unittest
 from src import algorithms
+import pandas as pd
 
 
 def convert_to_dict_list(table):
-    headers = ["<OPEN>", "<HIGH>", "<LOW>", "<CLOSE>"]
+    headers = ["OPEN", "HIGH", "LOW", "CLOSE"]
     dict_list = [dict(zip(headers, row)) for row in table]
     return dict_list
+
+
+def convert_to_dataframe(data):
+    df = pd.DataFrame(data, columns=["open", "high", "low", "close"])
+    df["ticker"] = "TEST"
+    df["per"] = 5
+    df["date"] = pd.to_datetime(["2023-03-22"] * len(data))
+    df["time"] = pd.Series([f"{i+1:06d}" for i in range(len(data))])
+    df["vol"] = 100
+    df["openint"] = 0
+    df["true_range"] = df["high"] - df["low"]
+    df["atr"] = df["true_range"].rolling(window=4).mean()
+    df = df[
+        [
+            "ticker",
+            "per",
+            "date",
+            "time",
+            "open",
+            "high",
+            "low",
+            "close",
+            "vol",
+            "openint",
+            "true_range",
+            "atr",
+        ]
+    ]
+    return df
 
 
 def test_data_sanity_check(tests):
@@ -18,7 +48,7 @@ def test_data_sanity_check(tests):
             assert row[3] <= row[1], "Close must be less than or equal to high"
             assert row[0] >= row[2], "Open must be greater than or equal to low"
             assert row[3] >= row[2], "Close must be greater than or equal to low"
-            assert row[1]
+            assert row[1] >= row[2], "High must be greater than or equal to low"
 
 
 def set_up_parameters():
