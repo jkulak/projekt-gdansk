@@ -1,7 +1,30 @@
-# returns stock price difference between buying price to selling price
-# TICKER,PER,DATE,TIME,OPEN,HIGH,LOW,CLOSE,VOL,OPENINT
-# b - base price
-def algo(data, d2, d1, s, u1, u2):
+def the_nilesh_method(data, d2, d1, s, u1, u2):
+    """
+    Algorithm implementing the Nilesh trading method.
+
+    Calculates the profit/loss for the given instrument,
+    when using the Nilesh algoithm for given OHKCV data points.
+
+    Parameters:
+    -----------
+    data: list of dictionaries
+        List of OHLCV (Open, High, Low, Close, Volume) data points
+    d2: float
+        A price point indicating the second level of support for the security
+    d1: float
+        A price point indicating the first level of support for the security
+    s: float
+        The current stop loss value for the security
+    u1: float
+        A price point indicating the first level of resistance for the security
+    u2: float
+        A price point indicating the second level of resistance for the security
+
+    Returns:
+    --------
+    result: float
+        The profit/loss value from the algorithm execution.
+    """
 
     win = float(u1 - s)
     loss = float(d1 - s)

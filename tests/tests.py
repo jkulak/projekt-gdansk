@@ -1,6 +1,6 @@
 import sys
 import unittest
-from app import algo
+from app import algorithms
 
 
 def convert_to_dict_list(table):
@@ -152,7 +152,9 @@ class TestAlgo(unittest.TestCase):
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                    ),
                     test["expected_result"],
                     places=5,
                 )
@@ -251,7 +253,9 @@ class TestAlgo(unittest.TestCase):
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                    ),
                     test["expected_result"],
                     places=5,
                 )
@@ -298,7 +302,9 @@ class TestAlgo(unittest.TestCase):
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                    ),
                     test["expected_result"],
                     places=5,
                 )
@@ -344,7 +350,9 @@ class TestAlgo(unittest.TestCase):
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                    ),
                     test["expected_result"],
                     places=5,
                 )
@@ -475,7 +483,9 @@ class TestAlgo(unittest.TestCase):
         for test in tests:
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
-                    algo.algo(convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50),
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                    ),
                     test["expected_result"],
                     places=5,
                 )
@@ -497,10 +507,12 @@ class TestAlgo(unittest.TestCase):
         test_data_sanity_check(tests)
 
         for test in tests:
-            "algo() returns an float"
+            "algo() returns a float"
             self.assertEqual(
                 type(
-                    algo.algo(convert_to_dict_list(test["data"]), *set_up_parameters())
+                    algorithms.the_nilesh_method(
+                        convert_to_dict_list(test["data"]), *set_up_parameters()
+                    )
                 ),
                 float,
             )

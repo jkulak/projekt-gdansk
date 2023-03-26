@@ -2,7 +2,7 @@ import csv
 import os
 
 
-def get_csv_files(directory):
+def get_data_files(directory):
     return [file for file in os.listdir(directory) if file.endswith(".txt")]
 
 
@@ -14,7 +14,7 @@ def is_float(value):
         return False
 
 
-def read_csv_file(file_path):
+def read_data_file(file_path):
     with open(file_path, "r") as file:
         reader = csv.DictReader(file)
         headers = reader.fieldnames
