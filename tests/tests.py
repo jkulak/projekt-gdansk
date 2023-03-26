@@ -1,6 +1,6 @@
 import sys
 import unittest
-from app import algorithms
+from src import algorithms
 
 
 def convert_to_dict_list(table):
