@@ -1,28 +1,34 @@
 import sys
 import algorithms
 from data_handling import get_data_files, pd_read_data_file
-from metrics import add_average_true_range
+from metrics import add_average_true_range, add_daily_atr_to_dataframe
 from tabulate import tabulate
 
-DATA_DIR = "./test_data/5 min/us/nyse stocks/1/"
+DATA_DIR = "./test_data/5 min/us/nasdaq stocks/1/"
+# DATA_DIR = "./test_data/popular/"
 
 
 def main():
-    results = []
     files = get_data_files(DATA_DIR)
-    for file in files[:10]:
+    ticker_results = []
+    ticker_total = 0
+
+    for file in files[3:20]:
+        results = []
+        total = 0
         df = pd_read_data_file(DATA_DIR + file)
-        df = add_average_true_range(df)
+        df = add_daily_atr_to_dataframe(df, 9)
 
         # Group by date column and iterate over each group
         for date, group in df.groupby("date"):
-            print(group)
-            # result = algorithms.the_nilesh_method(group)
-            # results.append({date, result})
+            # print(group)
+            result = algorithms.the_nilesh_method(group)
+            total += result
+            results.append((date, result, total))
 
-        sys.exit()
-        print(tabulate(results, headers=["Date", "Result"], tablefmt="grid"))
-        sys.exit(0)
+        ticker_results.append((file, total))
+
+    print(tabulate(ticker_results, headers=["File", "Total"], tablefmt="grid"))
 
 
 if __name__ == "__main__":

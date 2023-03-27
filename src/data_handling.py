@@ -25,4 +25,4 @@ def pd_read_data_file(file_path):
 
 
 def get_data_files(directory):
-    return [file for file in os.listdir(directory) if file.endswith(".txt")]
+    return sorted([file for file in os.listdir(directory) if file.endswith(".txt")])

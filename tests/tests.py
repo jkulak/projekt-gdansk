@@ -4,7 +4,7 @@ from src import algorithms
 import pandas as pd
 
 
-def convert_to_dict_list(table):
+def convert_to_dataframe(table):
     headers = ["OPEN", "HIGH", "LOW", "CLOSE"]
     dict_list = [dict(zip(headers, row)) for row in table]
     return dict_list
@@ -52,7 +52,7 @@ def test_data_sanity_check(tests):
 
 
 def set_up_parameters():
-    return [10, 20, 30, 40, 50]
+    return [40]
 
 
 class TestAlgo(unittest.TestCase):
@@ -183,7 +183,7 @@ class TestAlgo(unittest.TestCase):
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
                     algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                        convert_to_dataframe(test["data"]), 40
                     ),
                     test["expected_result"],
                     places=5,
@@ -284,7 +284,7 @@ class TestAlgo(unittest.TestCase):
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
                     algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                        convert_to_dataframe(test["data"]), 40
                     ),
                     test["expected_result"],
                     places=5,
@@ -333,7 +333,7 @@ class TestAlgo(unittest.TestCase):
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
                     algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                        convert_to_dataframe(test["data"]), 40
                     ),
                     test["expected_result"],
                     places=5,
@@ -381,7 +381,7 @@ class TestAlgo(unittest.TestCase):
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
                     algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                        convert_to_dataframe(test["data"]), 40
                     ),
                     test["expected_result"],
                     places=5,
@@ -410,7 +410,7 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "c",
                 "data": [
-                    [30, 40, 28, 40],
+                    [30, 32, 20, 32],
                     [99, 99, 99, 99],
                 ],
                 "expected_result": -10,
@@ -418,7 +418,7 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "d",
                 "data": [
-                    [30, 40, 30, 40],
+                    [30, 30, 20, 20],
                     [99, 99, 99, 99],  # is not reached
                 ],
                 "expected_result": -10,
@@ -426,8 +426,8 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "e",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 50, 31, 39],  # buy and sell equal u2
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 10, 21],  # buy and sell equal d2
                     [99, 99, 99, 99],  # is not reached
                 ],
                 "expected_result": 10,
@@ -435,8 +435,8 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "f",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 51, 31, 39],  # buy and sell greater u2
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 9, 21],  # buy and sell lower d2
                     [99, 99, 99, 99],  # is not reached
                 ],
                 "expected_result": 10,
@@ -444,66 +444,66 @@ class TestAlgo(unittest.TestCase):
             {
                 "case_name": "g",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 50, 31, 39],  # buy and sell equal u2
+                    [30, 30, 21, 21],  # nothing is happening
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 10, 21],  # buy and sell equal d2
                 ],
                 "expected_result": 10,
             },
             {
                 "case_name": "h",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 51, 31, 39],  # buy and sell greater u2
+                    [30, 30, 21, 21],  # nothing is happening
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 9, 21],  # buy and sell lower d2
                 ],
                 "expected_result": 10,
             },
             {
                 "case_name": "j",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [31, 51, 31, 39],  # trigger sell
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy
+                    [29, 29, 9, 21],  # trigger sell
                 ],
                 "expected_result": 10,
             },
             {
                 "case_name": "k",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [31, 51, 31, 39],  # trigger sell
+                    [30, 30, 21, 21],  # nothing is happening
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy
+                    [29, 29, 9, 21],  # trigger sell
                 ],
                 "expected_result": 10,
             },
             {
                 "case_name": "l",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [31, 39, 31, 39],  # sell is not happening
-                    [31, 51, 31, 39],  # trigger sell
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy
+                    [29, 29, 21, 21],  # sell is not happening
+                    [29, 29, 9, 21],  # trigger sell
                 ],
                 "expected_result": 10,
             },
             {
                 "case_name": "m",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [29, 39, 29, 39],  # loss
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy
+                    [31, 31, 21, 21],  # loss
                 ],
                 "expected_result": -10,
             },
             {
                 "case_name": "o",
                 "data": [
-                    [30, 39, 30, 39],  # nothing is happening
-                    [31, 41, 31, 39],  # trigger buy
-                    [31, 51, 31, 39],  # trigger sell
-                    [29, 39, 29, 39],  # loss
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy
+                    [29, 29, 9, 21],  # trigger sell
+                    [25, 31, 21, 21],  # loss
                 ],
                 "expected_result": 10,
             },
@@ -514,7 +514,157 @@ class TestAlgo(unittest.TestCase):
             with self.subTest(test["case_name"]):
                 self.assertAlmostEqual(
                     algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), 10, 20, 30, 40, 50
+                        convert_to_dataframe(test["data"]), 40
+                    ),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case8(self):
+        "Test case 8: going down, buy at d1, sell between d1 and d2, partial win"
+
+        tests = [
+            {
+                "case_name": "case 8 a",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 15, 15],  # partial win
+                ],
+                "expected_result": 5,
+            },
+            {
+                "case_name": "case 8 b",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy lower d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 15, 15],  # partial win
+                ],
+                "expected_result": 5,
+            },
+            {
+                "case_name": "case 8 c",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [25, 31, 21, 21],  # loss h>s
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 8 d",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy lower d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [25, 31, 21, 21],  # loss h>s
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 8 e",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 30, 15, 15],  # loss h=s
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 8 f",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy lower d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 30, 15, 15],  # loss h=s
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 8 g",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy lower d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 30, 15, 15],  # loss h=s
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 4, 4],  # sell is not happening
+                ],
+                "expected_result": -10,
+            },
+            {
+                "case_name": "case 8 h",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 18, 21],  # sell is not happeningg
+                    [27, 29, 14, 14],  # partial win
+                ],
+                "expected_result": 6,
+            },
+        ]
+
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algorithms.the_nilesh_method(
+                        convert_to_dataframe(test["data"]), 40
+                    ),
+                    test["expected_result"],
+                    places=5,
+                )
+
+    def test_algo_case7(self):
+        "Test case 7: going down, buy at d1, sell between s and d1, partial loss"
+
+        tests = [
+            {
+                "case_name": "case 7 a",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 25, 25],  # partial loss
+                ],
+                "expected_result": -5,
+            },
+            {
+                "case_name": "case 7 b",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 19, 21],  # trigger buy lower d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 25, 25],  # partial loss
+                ],
+                "expected_result": -5,
+            },
+            {
+                "case_name": "case 7 h",
+                "data": [
+                    [30, 30, 21, 21],  # nothing is happening
+                    [29, 29, 20, 21],  # trigger buy equal d1
+                    [29, 29, 18, 21],  # sell is not happening
+                    [29, 29, 18, 21],  # sell is not happeningg
+                    [27, 29, 24, 24],  # partial loss
+                ],
+                "expected_result": -4,
+            },
+        ]
+
+        test_data_sanity_check(tests)
+
+        for test in tests:
+            with self.subTest(test["case_name"]):
+                self.assertAlmostEqual(
+                    algorithms.the_nilesh_method(
+                        convert_to_dataframe(test["data"]), 40
                     ),
                     test["expected_result"],
                     places=5,
@@ -540,9 +690,7 @@ class TestAlgo(unittest.TestCase):
             "algo() returns a float"
             self.assertEqual(
                 type(
-                    algorithms.the_nilesh_method(
-                        convert_to_dict_list(test["data"]), *set_up_parameters()
-                    )
+                    algorithms.the_nilesh_method(convert_to_dataframe(test["data"]), 40)
                 ),
                 float,
             )
