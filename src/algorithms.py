@@ -41,7 +41,6 @@ def the_nilesh_method(data, atr=None):
         if (h >= u1) and (l <= s):
             return loss
 
-        # case 9
         # "everything happens in the same minute"
         if (l <= d1) and (h >= s):
             return loss
@@ -52,17 +51,16 @@ def the_nilesh_method(data, atr=None):
         if index < 1:
             continue
 
-        if (h >= u2) and (l > s):
-            return win
-
-        # case 1, going up, buy at u1, sell at u2
         if h >= u1:
             long_triggered = True
+
+        if h >= u2 and l > s:
+            return win
 
         if long_triggered and l <= s:
             return loss
 
-        if long_triggered and l > s:
+        if long_triggered:
             result = c - u1
 
         # case 9, going down, a win after a trigger
